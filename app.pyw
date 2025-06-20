@@ -707,6 +707,9 @@ class MainWindow(QMainWindow):
             log_msg2 = f"[{current_time}][警告]即便显示成功，也要确保已经和服务器管理员确定开放了端口！"
             self.log_area.append(f"<span style='color:red;'>{log_msg2}</span>")
             self.log_manager.write_app_log(log_msg2)
+            log_msg3 = f"[{current_time}][那什么]工具由糯米茨开发，欢迎来找我玩！QQ：1090007836"'''请勿删除该行消息'''
+            self.log_area.append(f"<span style='color:red;'>{log_msg3}</span>")
+            self.log_manager.write_app_log(log_msg3)
         else:
             self.update_log("[错误]无法从配置文件中获取服务器地址")
 
