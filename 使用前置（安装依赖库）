@@ -1,0 +1,11 @@
+pip install pyinstaller
+if errorlevel 1 (
+    echo error: Install pyinstaller failed!
+    goto :END
+)
+
+pip install PyQt5
+if errorlevel 1 (
+    echo error: Install PyQt5 failed!
+    goto :END
+)
