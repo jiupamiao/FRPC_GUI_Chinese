@@ -416,7 +416,7 @@ class MainWindow(QMainWindow):
         remote_port_layout.addWidget(self.remote_port_input)
         config_layout.addLayout(remote_port_layout)
         #自定义联系方式↓还有你开放给用户的端口什么什么的
-        port_hint = QLabel("目前开放端口：(未开放)，如需使用其他端口（或端口已被使用）请联系<a href='联系方式网址' style='color:#DE5330;text-decoration:underline;'>联系方式</a>")
+        port_hint = QLabel("目前开放端口：(设置为你的端口)，如需使用其他端口（或端口已被使用）请联系<a href='你的联系方式地址' style='color:#DE5330;text-decoration:underline;'>你的联系方式名称（昵称）</a>")
         port_hint.setFont(QFont("Microsoft YaHei UI", 9))
         port_hint.setTextFormat(Qt.RichText)
         port_hint.setTextInteractionFlags(Qt.TextBrowserInteraction)
@@ -475,13 +475,13 @@ class MainWindow(QMainWindow):
             message = ""
             if config_missing:#自定义找不到ini文件时候的提示
                 message += """
-            <p>我没有找到 <strong>frpc.ini</strong> ！！！</p>
-            <p>这是内网穿透的配置文件，工具得有这个文件才能正常工作。</p>
-            <p>如果这是你第一次使用，找TA：</p>
-            <p>QQ<a href="联系方式地址" style="color:#fe7676">联系方式</a></p>
-            <p>或使用邮箱找<a href="mailto:邮箱地址" style="color:#fe7676">邮箱</a></p>
-            <p><strong>该程序仅供<span style="color:#fe7676">你名字</span>的内网穿透使用，擅自修改ini文件无法使用该工具连接。</strong></p>
-            """
+<p>我没有找到 <strong>frpc.ini</strong> ！！！</p>
+<p>这是内网穿透的配置文件，工具得有这个文件才能正常工作。</p>
+<p>如果这是你第一次使用，找TA：</p>
+<p>QQ<a href="你的联系方式地址" style="color:#fe7676">你的联系方式名称</a></p>
+<p>或使用邮箱找<a href="mailto:邮箱地址" style="color:#fe7676">你的邮箱</a></p>
+<p><strong>该程序仅供<span style="color:#fe7676">你的名字</span>的内网穿透使用，擅自修改ini文件无法使用该工具连接。</strong></p>
+"""
                 if frpc_missing:
                     message += "<hr>"
         
@@ -547,19 +547,6 @@ class MainWindow(QMainWindow):
                 msg_box.exec_()
                 sys.exit(1)
 
-    def on_process_finished(self):
-        """FRP进程结束时的处理"""
-        log_msg = "FRP连接已停止"
-        self.start_button.setEnabled(True)
-        self.stop_button.setEnabled(False)
-        self.update_log(log_msg)
-
-        try:
-            with open(self.config_path, 'w', encoding='utf-8') as f:
-                f.write("感谢您的使用~[自定义符号]")
-        except Exception as e:
-            print(f"修改文件内容失败: {e}")
-
     def update_config(self):
         """更新配置文件内容"""
         name = self.name_input.text().strip()
@@ -601,6 +588,19 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "配置文件写入错误", f"写入配置文件时出现错误: {str(e)}")
             return False
 
+    def on_process_finished(self):
+        """FRP进程结束时的处理"""
+        log_msg = "FRP连接已停止"
+        self.start_button.setEnabled(True)
+        self.stop_button.setEnabled(False)
+        self.update_log(log_msg)
+
+        try:
+            with open(self.config_path, 'w', encoding='utf-8') as f:
+                f.write("感谢您的使用~[自定义符号]")
+        except Exception as e:
+            print(f"修改文件内容失败: {e}")
+
     def closeEvent(self, event):
         """窗口关闭时的处理"""
         if self.frp_thread and self.frp_thread.running:
@@ -640,6 +640,10 @@ class MainWindow(QMainWindow):
             os.system(f'attrib +h {self.config_path}')
         except Exception as e:
             print(f"隐藏文件失败: {e}")
+        try:
+            os.system(f'attrib -h {self.config_path}')
+        except Exception as e:
+            print(f"取消隐藏文件失败: {e}")
 
         self.frp_thread = FRPThread(self.frpc_path, self.config_path, self.log_manager)
         self.frp_thread.status_updated.connect(self.update_status)
@@ -693,7 +697,7 @@ class MainWindow(QMainWindow):
         
         if server_address:
             current_time = datetime.now().strftime("%H:%M:%S")
-            log_msg = f"[{current_time}][信息]链接地址为：{server_address}:{remote_port}。复制到至”添加至服务器“即可使用"
+            log_msg = f"[{current_time}][信息]链接地址为：{server_address}:{remote_port}。"
             self.log_area.append(f"<span style='color:blue;'>{log_msg}</span>")
             self.log_manager.write_app_log(log_msg)
             log_msg2 = f"[{current_time}][警告]即便显示成功，也要确保已经和服务器管理员确定开放了端口！"
