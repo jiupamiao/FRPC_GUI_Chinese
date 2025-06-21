@@ -514,7 +514,6 @@ class MainWindow(QMainWindow):
         """检查ini文件内容是否包含特定符号，或是否能正常读取"""
         if os.path.exists(self.config_path):
             try:
-                # 尝试使用UTF-8读取文件
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     content = f.read()
             except UnicodeDecodeError:
@@ -538,7 +537,7 @@ class MainWindow(QMainWindow):
                 msg_box.exec_()
                 sys.exit(1)
                 
-            if '‎' not in content:# 检查ini文件内容是否包含特定符号，这里设置为'‎'，至少这个可以保证在记事本里不露馅
+            if '[自定义符号]' not in content:# 检查ini文件内容是否包含特定符号，这里设置为'[自定义符号]'，推荐使用不可见字符。此处修改后，需要同步修改第564行的内容。
                 msg_box = QMessageBox(self)
                 msg_box.setWindowTitle("ini文件被修改")
                 msg_box.setText("ini文件内容不完整，请删除ini文件并重启工具以重新获取。")
@@ -560,10 +559,10 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print(f"取消隐藏文件失败: {e}")
 
-        # 将文件内容修改为"自定义内容，但必须包含‎（或其他自定义特殊符号，以用于验证该文件的专一性）"
+        # 将配置文件ini修改为自定义内容以隐藏frp链接的token，但必须包含你的自定义符号（详见“#这里”）
         try:
             with open(self.config_path, 'w', encoding='utf-8') as f:
-                f.write("感谢您的使用~‎")
+                f.write("感谢您的使用~[自定义符号]")
         except Exception as e:
             print(f"修改文件内容失败: {e}")
 
