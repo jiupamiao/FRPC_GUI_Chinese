@@ -104,7 +104,6 @@ class FRPThread(QThread):
     process_finished = pyqtSignal()
     
     proxy_started = pyqtSignal(str)
-#自定义的日志翻译，如果没有补充的话可以不修改，基本上会报的消息我都写下去了
     LOG_TRANSLATION = {
         "start proxy success": "代理启动成功",
         "start reverse proxy success": "反向代理启动成功",
@@ -417,7 +416,7 @@ class MainWindow(QMainWindow):
         remote_port_layout.addWidget(self.remote_port_input)
         config_layout.addLayout(remote_port_layout)
         #自定义联系方式↓还有你开放给用户的端口什么什么的
-        port_hint = QLabel("目前开放端口：12346，如需使用其他端口（或端口已被使用）请联系<a href='你的联系方式' style='color:#DE5330;text-decoration:underline;'>你的联系方式</a>")
+        port_hint = QLabel("目前开放端口：(未开放)，如需使用其他端口（或端口已被使用）请联系<a href='联系方式网址' style='color:#DE5330;text-decoration:underline;'>联系方式</a>")
         port_hint.setFont(QFont("Microsoft YaHei UI", 9))
         port_hint.setTextFormat(Qt.RichText)
         port_hint.setTextInteractionFlags(Qt.TextBrowserInteraction)
@@ -479,9 +478,9 @@ class MainWindow(QMainWindow):
             <p>我没有找到 <strong>frpc.ini</strong> ！！！</p>
             <p>这是内网穿透的配置文件，工具得有这个文件才能正常工作。</p>
             <p>如果这是你第一次使用，找TA：</p>
-            <p>QQ<a href="自己设定的QQ链接" style="color:#fe7676">QQ昵称</a></p>
-            <p>或使用邮箱找<a href="mailto:邮箱地址" style="color:#fe7676">邮箱地址</a></p>
-            <p><strong>该程序仅供<span style="color:#fe7676">你自己名字</span>的内网穿透使用，擅自修改ini文件无法使用该工具连接。</strong></p>
+            <p>QQ<a href="联系方式地址" style="color:#fe7676">联系方式</a></p>
+            <p>或使用邮箱找<a href="mailto:邮箱地址" style="color:#fe7676">邮箱</a></p>
+            <p><strong>该程序仅供<span style="color:#fe7676">你名字</span>的内网穿透使用，擅自修改ini文件无法使用该工具连接。</strong></p>
             """
                 if frpc_missing:
                     message += "<hr>"
@@ -514,6 +513,7 @@ class MainWindow(QMainWindow):
         """检查ini文件内容是否包含特定符号，或是否能正常读取"""
         if os.path.exists(self.config_path):
             try:
+                # 尝试使用UTF-8读取文件
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     content = f.read()
             except UnicodeDecodeError:
@@ -537,7 +537,7 @@ class MainWindow(QMainWindow):
                 msg_box.exec_()
                 sys.exit(1)
                 
-            if '[自定义符号]' not in content:# 检查ini文件内容是否包含特定符号，这里设置为'[自定义符号]'，推荐使用不可见字符。此处修改后，需要同步修改第564行的内容。
+            if '[自定义符号]' not in content:# 检查ini文件内容是否包含特定符号，这里设置为'[自定义符号]'推荐设置为常见编辑器不可见的符号
                 msg_box = QMessageBox(self)
                 msg_box.setWindowTitle("ini文件被修改")
                 msg_box.setText("ini文件内容不完整，请删除ini文件并重启工具以重新获取。")
@@ -554,12 +554,6 @@ class MainWindow(QMainWindow):
         self.stop_button.setEnabled(False)
         self.update_log(log_msg)
 
-        try:
-            os.system(f'attrib -h {self.config_path}')
-        except Exception as e:
-            print(f"取消隐藏文件失败: {e}")
-
-        # 将配置文件ini修改为自定义内容以隐藏frp链接的token，但必须包含你的自定义符号（详见“#这里”）
         try:
             with open(self.config_path, 'w', encoding='utf-8') as f:
                 f.write("感谢您的使用~[自定义符号]")
@@ -607,8 +601,6 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "配置文件写入错误", f"写入配置文件时出现错误: {str(e)}")
             return False
 
-
-
     def closeEvent(self, event):
         """窗口关闭时的处理"""
         if self.frp_thread and self.frp_thread.running:
@@ -635,6 +627,7 @@ class MainWindow(QMainWindow):
         else:
             self.log_manager.close()
             event.accept()
+
     def start_frp(self):
         """启动FRP连接"""
         if self.frp_thread and self.frp_thread.running:
@@ -693,9 +686,9 @@ class MainWindow(QMainWindow):
         cursor = self.log_area.textCursor()
         cursor.movePosition(QTextCursor.End)
         self.log_area.setTextCursor(cursor)
+
     def on_proxy_started(self, remote_port):
         """代理启动成功后的处理"""
-        # 从配置文件读取服务器地址
         server_address = self.get_server_address_from_config()
         
         if server_address:
@@ -707,7 +700,7 @@ class MainWindow(QMainWindow):
             self.log_area.append(f"<span style='color:red;'>{log_msg2}</span>")
             self.log_manager.write_app_log(log_msg2)
             log_msg3 = f"[{current_time}][那什么]工具由糯米茨开发，欢迎来找我玩！QQ：1090007836"
-            '''请勿删除上一行消息'''
+            '''请勿删除该行消息'''
             self.log_area.append(f"<span style='color:red;'>{log_msg3}</span>")
             self.log_manager.write_app_log(log_msg3)
         else:
@@ -735,4 +728,4 @@ if __name__ == "__main__":
 
     window = MainWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec_())        
