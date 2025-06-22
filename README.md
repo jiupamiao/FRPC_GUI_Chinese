@@ -1,15 +1,30 @@
 # FRP中文客户端生成工具（非官方）
 
-<div style="display: flex; gap: 10px; margin-bottom: 20px;">
-  <a href="https://qm.qq.com/q/AX440I8FKU" target="_blank" style="padding: 8px 16px; background-color: #1E88E5; color: white; text-decoration: none; border-radius: 4px;">QQ联系</a>
-  <a href="mailto:luocibai2@gmail.com" target="_blank" style="padding: 8px 16px; background-color: #43A047; color: white; text-decoration: none; border-radius: 4px;">发送邮件</a>
-  <a href="https://t.me/+uNjj60QrfV43OTBl" target="_blank" style="padding: 8px 16px; background-color: #0088CC; color: white; text-decoration: none; border-radius: 4px;">Telegram群组</a>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
+  <a href="https://qm.qq.com/q/AX440I8FKU" target="_blank">
+    <img src="https://img.shields.io/badge/QQ%E8%81%94%E7%B3%BB-点击%E8%81%94%E7%B3%BB-blue?style=flat-square&logo=tencent-qq" alt="QQ联系">
+  </a>
+  <a href="mailto:luocibai2@gmail.com" target="_blank">
+    <img src="https://img.shields.io/badge/Email-%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6-red?style=flat-square&logo=mail.ru" alt="发送邮件">
+  </a>
+  <a href="https://t.me/+uNjj60QrfV43OTBl" target="_blank">
+    <img src="https://img.shields.io/badge/Telegram-%E7%BE%A4%E7%BB%84%E8%81%94%E7%B3%BB-blue?style=flat-square&logo=telegram" alt="Telegram群组">
+  </a>
 </div>
 
 ## 更新日志
 - **2025.06.22**
   - 新增功能：应用现在会在关闭时自动保存用户输入的连接名称、本地端口和远程端口，并在下次启动时自动恢复这些设置。
   - 优化日志处理：增强了日志翻译功能，对更多类型的错误和状态信息进行了中文翻译，并提供更详细的问题解决建议。
+
+- **2025.06.15**
+  - 修复了在某些系统上日志显示乱码的问题。
+  - 优化了配置文件检查逻辑，提高了应用的稳定性。
+
+- **2025.06.01**
+  - 初始版本发布，支持基本的FRP客户端配置和启动功能。
+  - 实现了日志的中文翻译和彩色显示。
+  - 添加了配置文件保护机制，防止用户误修改。
 
 ## 项目简介
 这是一个用 Python 编写的工具，可快速创建专属简体中文 FRP 客户端，支持自定义内容，适合服务端管理人员使用。  
@@ -42,10 +57,10 @@
 本项目非大型项目，可自由使用，但请保留项目名称。
 
 ## 未来计划
-1.将需要自定义的选项单独作为一个配置文件，方便用户配置（已完成）  
-2.限制启动数量，防止因用户重复打开导致的端口异常占用  
-3.添加更多的自定义功能，如允许用户添加多个代理项目一并启用  
-4.应用缓存设置项，让用户不再需要每次打开应用都要手动填写（已完成）
+1. 将需要自定义的选项单独作为一个配置文件，方便用户配置（已完成）  
+2. 限制启动数量，防止因用户重复打开导致的端口异常占用  
+3. 添加更多的自定义功能，如允许用户添加多个代理项目一并启用  
+4. 应用缓存设置项，让用户不再需要每次打开应用都要手动填写（已完成）
 
 ## 其他说明
 - 此工具由业余爱好者自制，不建议大规模分发使用。
