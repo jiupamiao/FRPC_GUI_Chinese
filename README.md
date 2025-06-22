@@ -45,7 +45,7 @@
 - **开发初衷**：作者购买的服务器不足以支撑 MC 服务器运行，但有公网 IP，为充分利用资源，在服务器部署 `frps`，本地用 `frpc` 转发。为方便新手使用，开发了此工具，后续计划让 IP 地址可在客户端自定义。
 ## 想说的话
 总之就是一起玩！来玩！有空加我一起玩！  
-[个人QQ](https://qm.qq.com/q/AX440I8FKU)在这，还有[邮箱](mailto://luocibai2@gmail.com)，以及[telegram群组](https://t.me/+uNjj60QrfV43OTBl)  
+[个人QQ](https://qm.qq.com/q/AX440I8FKU)在这，还有[邮箱](mailto:luocibai2@gmail.com)，以及[telegram群组](https://t.me/+uNjj60QrfV43OTBl)  
 还有其他社群吗我不知道（
 
 ## 贡献者
