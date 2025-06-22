@@ -1,16 +1,8 @@
 # FRP中文客户端生成工具（非官方）
 
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
-  <a href="https://qm.qq.com/q/AX440I8FKU" target="_blank">
-    <img src="https://img.shields.io/badge/QQ%E8%81%94%E7%B3%BB-%E7%82%B9%E5%87%BB%E6%B7%BB%E5%8A%A0-blue?style=flat-square&logo=tencent-qq" alt="添加QQ">
-  </a>
-  <a href="mailto:luocibai2@gmail.com" target="_blank">
-    <img src="https://img.shields.io/badge/Email-%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6-red?style=flat-square&logo=mail.ru" alt="发送邮件">
-  </a>
-  <a href="https://t.me/+uNjj60QrfV43OTBl" target="_blank">
-    <img src="https://img.shields.io/badge/Telegram-%E7%BE%A4%E7%BB%84%E8%81%94%E7%B3%BB-blue?style=flat-square&logo=telegram" alt="Telegram群组">
-  </a>
-</div>
+[![添加QQ](https://img.shields.io/badge/QQ%E8%81%94%E7%B3%BB-%E7%82%B9%E5%87%BB%E6%B7%BB%E5%8A%A0-blue?style=flat-square&logo=qq)](https://qm.qq.com/q/AX440I8FKU)
+[![邮箱联系](https://img.shields.io/badge/Email-%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6-red?style=flat-square&logo=mail.ru)](mailto:luocibai2@gmail.com)
+[![Telgram群组](https://img.shields.io/badge/Telegram-%E7%BE%A4%E7%BB%84%E8%81%94%E7%B3%BB-blue?style=flat-square&logo=telegram)](https://t.me/+uNjj60QrfV43OTBl)
 
 ## 更新日志
 - **2025.06.22**
