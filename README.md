@@ -1,7 +1,15 @@
 # FRP中文客户端生成工具（非官方）
 
-下载后可能会报病毒，这是 `frpc` 本身的问题。若不信任，可去官方仓库 [fatedier/frp](https://github.com/fatedier/frp) 下载程序包。  
-有别的想要弄的工具嘛？我去试试搞出来！（
+<div style="display: flex; gap: 10px; margin-bottom: 20px;">
+  <a href="https://qm.qq.com/q/AX440I8FKU" target="_blank" style="padding: 8px 16px; background-color: #1E88E5; color: white; text-decoration: none; border-radius: 4px;">QQ联系</a>
+  <a href="mailto:luocibai2@gmail.com" target="_blank" style="padding: 8px 16px; background-color: #43A047; color: white; text-decoration: none; border-radius: 4px;">发送邮件</a>
+  <a href="https://t.me/+uNjj60QrfV43OTBl" target="_blank" style="padding: 8px 16px; background-color: #0088CC; color: white; text-decoration: none; border-radius: 4px;">Telegram群组</a>
+</div>
+
+## 更新日志
+- **2025.06.22**
+  - 新增功能：应用现在会在关闭时自动保存用户输入的连接名称、本地端口和远程端口，并在下次启动时自动恢复这些设置。
+  - 优化日志处理：增强了日志翻译功能，对更多类型的错误和状态信息进行了中文翻译，并提供更详细的问题解决建议。
 
 ## 项目简介
 这是一个用 Python 编写的工具，可快速创建专属简体中文 FRP 客户端，支持自定义内容，适合服务端管理人员使用。  
@@ -17,7 +25,7 @@
     - 该工具默认只允许运行一个代理项目，除非用户多次打开应用。
 5. **隐私保护**：代理启用时自动隐藏 `ini` 文件，防止 `ini` 中 `token` 被查看；代理结束后显示“感谢您的使用~”，防止用户备份 `ini` 文件导致 `token` 泄露。
 6. **实例**：
-   
+
 ![示例图片](imgs/示例图片.png)
 
 ## 使用方法
@@ -34,19 +42,15 @@
 本项目非大型项目，可自由使用，但请保留项目名称。
 
 ## 未来计划
-1.将需要自定义的选项单独作为一个配置文件，方便用户配置。（已完成）  
+1.将需要自定义的选项单独作为一个配置文件，方便用户配置（已完成）  
 2.限制启动数量，防止因用户重复打开导致的端口异常占用  
 3.添加更多的自定义功能，如允许用户添加多个代理项目一并启用  
-4.应用缓存设置项，让用户不再需要每次打开应用都要手动填写
+4.应用缓存设置项，让用户不再需要每次打开应用都要手动填写（已完成）
 
 ## 其他说明
 - 此工具由业余爱好者自制，不建议大规模分发使用。
 - **推荐分发人群**：想玩 MC 开房间，但没有合适 FRP 工具的人。
 - **开发初衷**：作者购买的服务器不足以支撑 MC 服务器运行，但有公网 IP，为充分利用资源，在服务器部署 `frps`，本地用 `frpc` 转发。为方便新手使用，开发了此工具，后续计划让 IP 地址可在客户端自定义。
-## 想说的话
-总之就是一起玩！来玩！有空加我一起玩！  
-[个人QQ](https://qm.qq.com/q/AX440I8FKU)在这，还有[邮箱](mailto:luocibai2@gmail.com)，以及[telegram群组](https://t.me/+uNjj60QrfV43OTBl)  
-还有其他社群吗我不知道（
 
 ## 贡献者
 我自己！
