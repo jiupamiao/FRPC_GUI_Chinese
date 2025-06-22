@@ -6,12 +6,70 @@ import re
 import threading
 import time
 import webbrowser
+import atexit
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QPushButton, QLabel, 
                             QLineEdit, QVBoxLayout, QHBoxLayout, QWidget, 
                             QTextEdit, QMessageBox, QFrame)
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont, QColor, QTextCursor
 from datetime import datetime
+
+# 新增：单实例支持模块
+import platform
+if platform.system() == 'Windows':
+    import win32event
+    import win32api
+else:
+    import fcntl
+
+class SingleInstance:
+    """单实例控制类 - 确保应用程序在系统中只运行一个实例"""
+    
+    def __init__(self, app_name="糯米茨内网穿透工具"):
+        self.app_name = app_name
+        self.locked = False
+        self.lock_handle = None
+        
+    def acquire_lock(self):
+        """获取应用程序锁"""
+        if platform.system() == 'Windows':
+            # Windows系统使用命名互斥体
+            mutex_name = f'Local\\{self.app_name}'
+            self.lock_handle = win32event.CreateMutex(None, 1, mutex_name)
+            error = win32api.GetLastError()
+            
+            if error == 183:  # ERROR_ALREADY_EXISTS
+                return False
+            self.locked = True
+        else:
+            # Unix/Linux/Mac系统使用文件锁
+            lock_file = f'/tmp/{self.app_name}.lock'
+            self.lock_file = open(lock_file, 'w')
+            try:
+                fcntl.flock(self.lock_file.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                self.locked = True
+                # 程序退出时删除锁文件
+                atexit.register(self.release_lock)
+            except IOError:
+                return False
+        
+        return self.locked
+    
+    def release_lock(self):
+        """释放应用程序锁"""
+        if self.locked:
+            if platform.system() == 'Windows':
+                if self.lock_handle:
+                    win32event.ReleaseMutex(self.lock_handle)
+            else:
+                if hasattr(self, 'lock_file') and self.lock_file:
+                    fcntl.flock(self.lock_file.fileno(), fcntl.LOCK_UN)
+                    self.lock_file.close()
+                    try:
+                        os.unlink(self.lock_file.name)
+                    except:
+                        pass
+            self.locked = False
 
 class ConfigManager:
     """配置文件管理类 - 负责保存和读取用户配置"""
@@ -780,6 +838,15 @@ class MainWindow(QMainWindow):
             return None
 
 if __name__ == "__main__":
+    # 创建单实例控制器
+    single_instance = SingleInstance()
+    
+    # 尝试获取应用锁
+    if not single_instance.acquire_lock():
+        # 如果获取锁失败，说明已有实例在运行
+        QMessageBox.critical(None, "应用已在运行", "糯米茨内网穿透工具已经在运行中，不能同时打开多个实例。")
+        sys.exit(1)
+    
     app = QApplication(sys.argv)
 
     font = QFont("Microsoft YaHei UI")
