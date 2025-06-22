@@ -1,6 +1,7 @@
 # FRP中文客户端生成工具（非官方）
 
-下载后可能会报病毒，这是 `frpc` 本身的问题。若不信任，可去官方仓库 [fatedier/frp](https://github.com/fatedier/frp) 下载程序包。
+下载后可能会报病毒，这是 `frpc` 本身的问题。若不信任，可去官方仓库 [fatedier/frp](https://github.com/fatedier/frp) 下载程序包。  
+有别的想要弄的工具嘛？我去试试搞出来！（
 
 ## 项目简介
 这是一个用 Python 编写的工具，可快速创建专属简体中文 FRP 客户端，支持自定义内容，适合服务端管理人员使用。  
