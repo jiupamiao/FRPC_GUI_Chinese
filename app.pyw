@@ -13,6 +13,43 @@ from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QFont, QColor, QTextCursor
 from datetime import datetime
 
+class ConfigManager:
+    """配置文件管理类 - 负责保存和读取用户配置"""
+    
+    def __init__(self, config_file="user_config.ini"):
+        self.config_file = config_file
+        self.config = configparser.ConfigParser()
+        
+    def save_config(self, name, local_port, remote_port):
+        """保存用户配置"""
+        try:
+            self.config['UserSettings'] = {
+                'name': name,
+                'local_port': local_port,
+                'remote_port': remote_port
+            }
+            
+            with open(self.config_file, 'w', encoding='utf-8') as configfile:
+                self.config.write(configfile)
+        except Exception as e:
+            print(f"保存配置失败: {e}")
+    
+    def load_config(self):
+        """加载用户配置"""
+        try:
+            if os.path.exists(self.config_file):
+                self.config.read(self.config_file, encoding='utf-8')
+                if 'UserSettings' in self.config:
+                    settings = self.config['UserSettings']
+                    return {
+                        'name': settings.get('name', ''),
+                        'local_port': settings.get('local_port', ''),
+                        'remote_port': settings.get('remote_port', '')
+                    }
+        except Exception as e:
+            print(f"加载配置失败: {e}")
+        return {'name': '', 'local_port': '', 'remote_port': ''}
+
 class LogManager:
     """日志文件管理类 - 负责创建和管理日志文件"""
     
@@ -354,8 +391,10 @@ class MainWindow(QMainWindow):
         self.frp_thread = None
         
         self.log_manager = LogManager()
+        self.config_manager = ConfigManager()  # 初始化配置管理器
         
         self.init_ui()
+        self.load_user_config()  # 加载用户配置
         self.check_files()
         self.check_ini_content()
 
@@ -620,13 +659,29 @@ class MainWindow(QMainWindow):
                 self.stop_frp()
                 self.frp_thread.wait()
                 
+                self.save_user_config()  # 保存用户配置
                 self.log_manager.close()
                 event.accept()
             else:
                 event.ignore()
         else:
+            self.save_user_config()  # 保存用户配置
             self.log_manager.close()
             event.accept()
+
+    def load_user_config(self):
+        """加载用户配置"""
+        config = self.config_manager.load_config()
+        self.name_input.setText(config['name'])
+        self.local_port_input.setText(config['local_port'])
+        self.remote_port_input.setText(config['remote_port'])
+    
+    def save_user_config(self):
+        """保存用户配置"""
+        name = self.name_input.text()
+        local_port = self.local_port_input.text()
+        remote_port = self.remote_port_input.text()
+        self.config_manager.save_config(name, local_port, remote_port)
 
     def start_frp(self):
         """启动FRP连接"""
@@ -732,4 +787,4 @@ if __name__ == "__main__":
 
     window = MainWindow()
     window.show()
-    sys.exit(app.exec_())        
+    sys.exit(app.exec_())
