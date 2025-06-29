@@ -10,7 +10,7 @@ def check_dependency(dep_name):
 
 def install_dependencies():
     """安装所需的依赖库"""
-    dependencies = ['pyyaml', 'PyQt5', 'pyinstaller', 'tqdm']
+    dependencies = ['pyyaml', 'PyQt5','pypiwin32', 'pyinstaller', 'tqdm']
     missing_deps = [dep for dep in dependencies if not check_dependency(dep)]
     
     if not missing_deps:
