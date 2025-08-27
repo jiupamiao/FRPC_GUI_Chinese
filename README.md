@@ -1,3 +1,7 @@
+
+<div align="center">
+  <img style="width:70%" src="https://count.getloli.com/@FRPC_GUI_Chinese?name=FRPC_GUI_Chinese&theme=gelbooru&padding=5&offset=0&align=top&scale=1&pixelated=1&darkmode=auto" alt=":name">
+</div>
 # FRP中文客户端生成工具（非官方）
 
 [![添加QQ](https://img.shields.io/badge/QQ%E8%81%94%E7%B3%BB-%E7%82%B9%E5%87%BB%E6%B7%BB%E5%8A%A0-blue?style=flat-square&logo=qq)](https://qm.qq.com/q/AX440I8FKU)
